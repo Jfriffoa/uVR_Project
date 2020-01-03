@@ -76,6 +76,7 @@ public class Turret : MonoBehaviour
     }
 
     void Shoot() {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<Bullet>().Seek(_target);
     }
 }
