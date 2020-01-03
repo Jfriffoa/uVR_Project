@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 70f;
-
+    
     Rigidbody _rb;
     Transform _target;
 
@@ -24,17 +24,17 @@ public class Bullet : MonoBehaviour
             return;
         }
 
+        //Move towards target
         Vector3 dir = _target.position - transform.position;
         float dist = speed * Time.fixedDeltaTime;
         _rb.MovePosition(_rb.position + dir.normalized * dist);
     }
 
-    //TODO: POLISH CON PARTICULAS
     void OnCollisionEnter(Collision collision) {
         Debug.Log("Colliding with..." + collision.gameObject);
 
         if (collision.transform == _target) {
-            Destroy(collision.gameObject);
+            collision.gameObject.SendMessage("Kill");
             Destroy(gameObject);
         }
     }

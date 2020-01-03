@@ -10,6 +10,8 @@ public class Turret : MonoBehaviour
     public float radius;
     public float turnSpeed = 10f;
 
+    public GameObject sphereArea;
+
     Transform _target;
     Vector3 initialEuler;
 
@@ -19,10 +21,13 @@ public class Turret : MonoBehaviour
     public float fireRate = 1f;
 
     float fireCountdown;
+    bool _canFire = true;
 
     void Start() {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         initialEuler = transform.rotation.eulerAngles;
+        sphereArea.transform.localScale = Vector3.one * 2 * radius;
+        sphereArea.SetActive(false);
     }
 
     void Update() {
@@ -36,7 +41,7 @@ public class Turret : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * turnSpeed);
 
         //Shoot me sweetie
-        if (fireCountdown <= 0f) {
+        if (fireCountdown <= 0f && _canFire) {
             Shoot();
             fireCountdown = 1f / fireRate;
         }
@@ -78,5 +83,15 @@ public class Turret : MonoBehaviour
     void Shoot() {
         var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().Seek(_target);
+    }
+
+    public void OnManipulationStarted() {
+        _canFire = false;
+        sphereArea.SetActive(true);
+    }
+
+    public void OnManipulationEnded() {
+        _canFire = true;
+        sphereArea.SetActive(false);
     }
 }

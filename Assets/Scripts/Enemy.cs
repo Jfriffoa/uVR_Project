@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     public float speed = 10f;
+    public GameObject deathExplosion;
 
     Transform _target;
     int _wavepointIndex = 0;
@@ -35,5 +35,14 @@ public class Enemy : MonoBehaviour
 
         _wavepointIndex++;
         _target = AIPath.Points[_wavepointIndex];
+    }
+
+    void Kill() {
+        //Instantiate Particles
+        var particles = Instantiate(deathExplosion, transform.position, transform.rotation);
+
+        //Destroy  E V E R Y T H I N G
+        Destroy(particles, 2f);
+        Destroy(gameObject);
     }
 }
