@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Start() {
         _rb = GetComponent<Rigidbody>();
+        speed *= transform.lossyScale.x;
     }
 
     void FixedUpdate() {

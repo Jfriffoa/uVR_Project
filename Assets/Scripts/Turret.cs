@@ -17,6 +17,7 @@ public class Turret : MonoBehaviour
 
     [Header("Shoot Behaviour")]
     public GameObject bulletPrefab;
+    public Transform bulletContainer;
     public Transform firePoint;
     public float fireRate = 1f;
 
@@ -51,7 +52,7 @@ public class Turret : MonoBehaviour
 
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius * transform.lossyScale.x);
     }
 
     void UpdateTarget() {
@@ -60,7 +61,7 @@ public class Turret : MonoBehaviour
 
     Transform GetTarget() {
         //Check the colliders in the sphere
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius * transform.lossyScale.x);
 
         Transform target = null;
         float nearestDistance = 1000000;
@@ -81,7 +82,7 @@ public class Turret : MonoBehaviour
     }
 
     void Shoot() {
-        var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation, bulletContainer);
         bullet.GetComponent<Bullet>().Seek(_target);
     }
 

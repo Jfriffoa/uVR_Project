@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5727713029647540176}
   - component: {fileID: 5887446447212116098}
   - component: {fileID: 6919619163258492216}
+  - component: {fileID: 2722103653426654757}
   m_Layer: 0
-  m_Name: BulletExplosion
+  m_Name: EnemyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3965340027560310973}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -7.748827, y: -1.791, z: 18.660248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5887446447212116098
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4811,3 +4812,17 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2722103653426654757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965340027560310973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c8a2e0535f347468bff63cf49eb5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  adjustSize: 1
+  adjustSpeed: 1
