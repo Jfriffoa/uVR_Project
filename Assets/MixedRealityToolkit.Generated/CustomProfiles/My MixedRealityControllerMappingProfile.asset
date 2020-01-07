@@ -294,8 +294,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: 
@@ -455,8 +455,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: 
@@ -757,9 +757,9 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 0
-        description: None
-        axisConstraint: 0
+        id: 16
+        description: Rotate Map
+        axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_1
       axisCodeY: AXIS_2
@@ -970,8 +970,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 49
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_5
@@ -1092,8 +1092,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_1
@@ -1318,8 +1318,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_4
@@ -2199,8 +2199,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_1
@@ -2360,8 +2360,8 @@ MonoBehaviour:
       axisType: 4
       inputType: 17
       inputAction:
-        id: 5
-        description: Teleport Direction
+        id: 16
+        description: Rotate Map
         axisConstraint: 4
       keyCode: 0
       axisCodeX: AXIS_4
