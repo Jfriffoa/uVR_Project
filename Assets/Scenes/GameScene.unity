@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 83925125}
   - component: {fileID: 83925126}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayArea Collider
   m_TagString: PlayArea
   m_Icon: {fileID: 0}
