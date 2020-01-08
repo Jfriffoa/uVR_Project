@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     void LateUpdate() {
         if (_target == null) {
             Debug.Log("No target. Destroying " + gameObject + "...");
-            Destroy(gameObject);
+            Destroy();
             return;
         }
 
@@ -36,6 +36,28 @@ public class Bullet : MonoBehaviour
 
         if (collision.transform == _target) {
             collision.gameObject.SendMessage("Kill");
+            Destroy();
+        }
+    }
+
+    void Destroy()
+    {
+        var particles = GetComponentInChildren<ParticleSystem>();
+
+        //If we have particles, wait until the particles are finished to destroy the game object
+        if (particles != null)
+        {
+            var main = particles.main;
+            main.loop = false;
+            main.stopAction = ParticleSystemStopAction.Destroy;
+            particles.Stop();
+
+            GetComponent<Renderer>().enabled = false;
+
+            Destroy(gameObject, 1f);
+
+        //If we don't have particles, just destroy the game object
+        } else {
             Destroy(gameObject);
         }
     }
