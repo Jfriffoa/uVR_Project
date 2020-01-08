@@ -5,6 +5,9 @@ using Microsoft.MixedReality.Toolkit.UI;
 
 public class GameManager : MonoBehaviour
 {
+    enum GameState { Idle, Playing, Pause }
+    GameState _currentState = GameState.Idle;
+
     #region Singleton
     // Singleton
     static GameManager _instance;
@@ -44,6 +47,9 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Feedback")]
     public TextMesh lifeText;
+    public GameObject mainMenuCanvas;
+    public GameObject pauseCanvas;
+    public GameObject endgameCanvas;
 
     void Start()
     {
@@ -72,9 +78,9 @@ public class GameManager : MonoBehaviour
         }
 
         //Erase any bullets left
-        for (int i = bulletContainer.childCount - 1; i >= 0; i++)
+        for (int i = bulletContainer.childCount - 1; i >= 0; i--)
         {
-            Destroy(bulletContainer.GetChild(i));
+            Destroy(bulletContainer.GetChild(i).gameObject);
         }
 
         //Make the spawner clean itself
@@ -89,6 +95,57 @@ public class GameManager : MonoBehaviour
         //Reset Lifes
         _currentLifes = initialLifes;
         lifeText.text = Mathf.Clamp(_currentLifes, 0, initialLifes) + "";
+
+        //Set the currentState to playing
+        _currentState = GameState.Playing;
+    }
+
+    public void ResumeGame()
+    {
+        if (_currentState != GameState.Pause)
+            return;
+
+        //Resume Spawner
+        spawner.Resume();
+
+        //Resume bullets
+        for (int i = 0; i < bulletContainer.childCount; i++)
+        {
+            bulletContainer.GetChild(i).GetComponent<Bullet>().enabled = true;
+        }
+
+        //Enable Turrets
+        EnableTurrets(true);
+
+        //Hide UI
+        pauseCanvas.SetActive(false);
+
+        //Change State
+        _currentState = GameState.Playing;
+    }
+
+    public void PauseGame()
+    {
+        if (_currentState != GameState.Playing)
+            return;
+
+        //Pause Spawner
+        spawner.Stop();
+
+        //Pause Bullets
+        for (int i = 0; i < bulletContainer.childCount; i++)
+        {
+            bulletContainer.GetChild(i).GetComponent<Bullet>().enabled = false;
+        }
+
+        //Disable Turrets
+        EnableTurrets(false);
+
+        //Show UI
+        pauseCanvas.SetActive(true);
+        
+        //Change State
+        _currentState = GameState.Pause;
     }
 
     void EnableTurrets(bool enable)
@@ -113,11 +170,16 @@ public class GameManager : MonoBehaviour
         // End Game
         if (_currentLifes <= 0)
         {
-            spawner.enabled = false;
+            Debug.Log("GAME FINISHED", gameObject);
+
+            spawner.Clean();
+            spawner.Stop();
             EnableTurrets(false);
 
-            Debug.Log("GAME FINISHED", gameObject);
-            //Time.timeScale = 0;
+            //TODO: INSTANTIATE PARTICLES
+            //TODO: SHOW SCREEN
+
+            _currentState = GameState.Idle;
         }
     }
 

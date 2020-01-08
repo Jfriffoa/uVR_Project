@@ -22,6 +22,18 @@ public class ParticleSizeToScale : MonoBehaviour
         //Modify the speed
         if (adjustSpeed)
             mainModule.startSpeedMultiplier *= transform.lossyScale.x;
+
+        foreach (var childSystem in GetComponentsInChildren<ParticleSystem>())
+        {
+            var main = childSystem.main;
+            //Modify the size
+            if (adjustSize)
+                main.startSize = AdjustCurve(main.startSize);
+
+            //Modify the speed
+            if (adjustSpeed)
+                main.startSpeedMultiplier *= transform.lossyScale.x;
+        }
     }
 
     //Adjust the variable to the new scale

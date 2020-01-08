@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision) {
-        Debug.Log("Colliding with..." + collision.gameObject);
+        //Debug.Log("Colliding with..." + collision.gameObject);
 
         if (collision.transform == _target) {
             collision.gameObject.SendMessage("Kill");

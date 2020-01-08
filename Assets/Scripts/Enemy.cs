@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _target = AIPath.Points[0];
+        transform.LookAt(_target);
         AdjustVars();
     }
 
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
 
         _wavepointIndex++;
         _target = AIPath.Points[_wavepointIndex];
+        transform.LookAt(_target);
     }
 
     void Kill() {
