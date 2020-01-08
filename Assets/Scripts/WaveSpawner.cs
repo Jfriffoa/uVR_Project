@@ -19,9 +19,16 @@ public class WaveSpawner : MonoBehaviour
     public TextMesh timerText;
     public TextMesh waveText;
 
-    void Start()
+    internal void Start()
     {
+        _waveNumber = 1;
+        _spawning = false;
         waveText.text = _waveNumber + "";
+    }
+
+    internal void Stop()
+    {
+        _spawning = true;
     }
 
     void Update() {
@@ -51,6 +58,16 @@ public class WaveSpawner : MonoBehaviour
     }
 
     void SpawnEnemy() {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, transform);
+        var enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, transform);
+        enemy.GetComponent<Enemy>().speed *= 1 + _waveNumber * .1f;
+    }
+
+    internal void Clean()
+    {
+        //Clean all the enemies left
+        for (int i = transform.childCount - 1; i >= 0; i++)
+        {
+            Destroy(transform.GetChild(i));
+        }
     }
 }
