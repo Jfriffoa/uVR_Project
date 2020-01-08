@@ -19,6 +19,9 @@ public class Turret : MonoBehaviour
     Transform _target;
     Vector3 initialEuler;
 
+    Vector3 initialPos;
+    Quaternion initialRot;
+
     [Header("Shoot Behaviour")]
     public GameObject bulletPrefab;
     public Transform bulletContainer;
@@ -28,9 +31,12 @@ public class Turret : MonoBehaviour
     float fireCountdown;
     bool _canFire = true;
 
-    void Start() {
+    internal void Start() {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
         initialEuler = transform.rotation.eulerAngles;
+
+        initialPos = transform.parent.localPosition;
+        initialRot = transform.parent.rotation;
 
         // Update the visual feedback to the radius of the turret
         sphereArea.transform.localScale = Vector3.one * 2 * radius;
@@ -118,6 +124,13 @@ public class Turret : MonoBehaviour
         CheckPlayArea();
     }
 
+    public void RestartPos()
+    {
+        _parentRb.velocity = Vector3.zero;
+        _parentRb.rotation = initialRot;
+        _parentRb.position = transform.parent.parent.TransformPoint(initialPos);
+    }
+
     //Check if we are inside the play area. If not, snap us
     void CheckPlayArea()
     {
@@ -146,7 +159,7 @@ public class Turret : MonoBehaviour
         {
             if (maxTurret[i] > maxArea[i])
             {
-                delta[i] += maxArea[i] - maxTurret[i];
+                delta[i] += (maxArea[i] - maxTurret[i]);
             }
         }
 

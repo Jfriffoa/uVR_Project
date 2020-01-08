@@ -40,25 +40,29 @@ public class GameManager : MonoBehaviour
     public int initialLifes = 5;
     int _currentLifes;
 
-    public GameObject[] turrets;
-    PosAndRot[] _turretsInitialState;
+    public Turret[] turrets;
 
     public Transform bulletContainer;
 
     [Header("UI Feedback")]
     public TextMesh lifeText;
+    public UnityEngine.UI.Text gameOverText;
+    [TextArea]
+    public string gameOverMessage;
+
     public GameObject mainMenuCanvas;
     public GameObject pauseCanvas;
     public GameObject endgameCanvas;
 
+    [Header("Particles")]
+    public GameObject playerTower;
+    public GameObject endgameParticles;
+
     void Start()
     {
-        //Save initial states
-        _turretsInitialState = new PosAndRot[turrets.Length];
-        for (int i = 0; i < turrets.Length; i++)
+        foreach (var turret in turrets)
         {
-            _turretsInitialState[i].position = turrets[i].transform.localPosition;
-            _turretsInitialState[i].rotation = turrets[i].transform.localRotation;
+            turret.Start();
         }
 
         //Disable turrets
@@ -70,13 +74,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        //Move torrets back to the initial pos
-        for (int i = 0; i < turrets.Length; i++)
-        {
-            turrets[i].transform.localPosition = _turretsInitialState[i].position;
-            turrets[i].transform.localRotation = _turretsInitialState[i].rotation;
-        }
-
         //Erase any bullets left
         for (int i = bulletContainer.childCount - 1; i >= 0; i--)
         {
@@ -89,6 +86,12 @@ public class GameManager : MonoBehaviour
         //Re-Enable Turrets
         EnableTurrets(true);
 
+        //Move torrets back to the initial pos
+        foreach (var turret in turrets)
+        {
+            turret.RestartPos();
+        }
+
         //Initiate Spawns
         spawner.Start();
 
@@ -98,6 +101,9 @@ public class GameManager : MonoBehaviour
 
         //Set the currentState to playing
         _currentState = GameState.Playing;
+
+        //Make sure the tower is active
+        playerTower.SetActive(true);
     }
 
     public void ResumeGame()
@@ -156,9 +162,7 @@ public class GameManager : MonoBehaviour
             if (handler != null)
                 handler.enabled = enable;
 
-            var turret = tur.GetComponentInChildren<Turret>();
-            if (turret != null)
-                turret.enabled = enable;
+            tur.enabled = enable;
         }
     }
 
@@ -176,16 +180,13 @@ public class GameManager : MonoBehaviour
             spawner.Stop();
             EnableTurrets(false);
 
-            //TODO: INSTANTIATE PARTICLES
-            //TODO: SHOW SCREEN
+            playerTower.SetActive(false);
+            Instantiate(endgameParticles, playerTower.transform.position, playerTower.transform.rotation, transform);
+
+            endgameCanvas.SetActive(true);
+            gameOverText.text = gameOverMessage + spawner.WaveNumber + " waves!";
 
             _currentState = GameState.Idle;
         }
-    }
-
-    private struct PosAndRot
-    {
-        internal Vector3 position;
-        internal Quaternion rotation;
     }
 }

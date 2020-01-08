@@ -12,6 +12,8 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenEnemies = .5f;
     public float initialCountdown = 10f;
 
+    public int WaveNumber { get { return _waveNumber; } }
+
     int _waveNumber = 1;
     float _countdown = 2f;
     bool _spawning = false;
