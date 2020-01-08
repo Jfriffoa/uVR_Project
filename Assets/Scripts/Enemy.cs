@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
 
     void GetNextPoint() {
         if (_wavepointIndex >= AIPath.Points.Length - 1) {
+            //Do Damage
+            GameManager.Instance.Damage();
+
             Destroy(gameObject);
             return;
         }
