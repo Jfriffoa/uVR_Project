@@ -18,17 +18,17 @@ public class Bullet : MonoBehaviour
         speed *= transform.lossyScale.x;
     }
 
-    void FixedUpdate() {
+    void LateUpdate() {
         if (_target == null) {
             Debug.Log("No target. Destroying " + gameObject + "...");
             Destroy(gameObject);
             return;
         }
 
-        //Move towards target
+        //Move towards target... with transform?
         Vector3 dir = _target.position - transform.position;
-        float dist = speed * Time.fixedDeltaTime;
-        _rb.MovePosition(_rb.position + dir.normalized * dist);
+        float dist = speed * Time.deltaTime;
+        transform.Translate(dir.normalized * dist, Space.World);
     }
 
     void OnCollisionEnter(Collision collision) {

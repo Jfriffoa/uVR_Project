@@ -14,7 +14,7 @@ public class RotateWorld : MonoBehaviour, IMixedRealityInputHandler<Vector2>
     float deadzone = 0.1f;
     float xRot = 0;
 
-    void LateUpdate()
+    void Update()
     {
         //Constantly rotate
         if (xRot != 0)
